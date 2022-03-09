@@ -1,0 +1,52 @@
+<ContentSideContainer>
+          <ContentFormContainer>
+            <ContentForm
+              name="validate_other"
+              {...formItemLayout}
+              //   onFinish={onFinish}
+              // onFinish={handleSubmit}
+            >
+              <Form.Item
+                name="upload"
+                valuePropName="fileList"
+                getValueFromEvent={normFile}
+              >
+                <Upload
+                  listType="picture-card"
+                  onPreview={handlePreview}
+                  onChange={handleChange}
+                  // onRemove={handleRemove}
+                >
+                  {!upload ? uploadButton : null}
+                </Upload>
+                <Modal
+                  visible={previewVisible}
+                  title={previewTitle}
+                  footer={null}
+                  onCancel={handleCancel}
+                >
+                  <img
+                    alt="example"
+                    style={{ width: "100%" }}
+                    src={previewImage}
+                  />
+                </Modal>
+              </Form.Item>
+              {/* <ContentImage
+                width={200}
+                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              /> */}
+              {/* <Form.Item>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  onSubmit={() => {
+                    console.log(123123);
+                  }}
+                >
+                  Submit
+                </Button>
+              </Form.Item> */}
+            </ContentForm>
+          </ContentFormContainer>
+        </ContentSideContainer>
