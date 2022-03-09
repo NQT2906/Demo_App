@@ -1,19 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import axios from "axios";
 import {
   ButtonUpload,
   SubmitButton,
   ContentContainer,
-  ContentImage,
   ContentSideContainer,
   FooterContainer,
-  FooterTypography,
   HeaderContainer,
   HeaderTypography,
   LayoutContainer,
   UploadContainer,
-  ContentCard,
-  ContentCardLeft,
   ContentContainerTop,
   ContentContainerCenter,
   ContentContainerBottom,
@@ -22,11 +19,13 @@ import {
   UploadOutlined,
   ArrowRightOutlined,
   ReloadOutlined,
-  InboxOutlined,
-  AntDesignOutlined,
 } from "@ant-design/icons";
 import InputOutput from "../../components/inOutput";
-import { Avatar } from "antd";
+import History from "../../components/history";
+import CarouselAuthor from "../../components/carousel";
+import { SERVER_URL } from "../../common/constants";
+import { Divider } from "antd";
+import ListImage from "../../components/listImage";
 
 function Home() {
   const [imageSrc, setImageSrc] = useState("");
@@ -41,13 +40,9 @@ function Home() {
     const formData = new FormData();
     formData.append("file", selectedFile);
     try {
-      // const response = await axios({
-      //   method: "GET",
-      //   url: "http://192.168.20.166:5000/history",
-      // });
       const response = await axios({
         method: "POST",
-        url: "http://192.168.20.166:5000/upload",
+        url: `${SERVER_URL}/upload`,
         data: formData,
         headers: {
           "Content-Type": "multipart/form-data",
@@ -60,15 +55,7 @@ function Home() {
     setLoading(false);
   };
 
-  // const handleFileSelect = (event: any) => {
-  //   setImageSrc(URL.createObjectURL(event.target.files[0]));
-  //   setSelectedFile(event.target.files[0]);
-  //   setUpload(!upload);
-  // };
-
   const handleFileUpload = (info: any) => {
-    // setImageSrc(URL.createObjectURL(info.file.originFileObj));
-    // setSelectedFile(info.file.originFileObj);
     setImageSrc(URL.createObjectURL(info.file));
     setSelectedFile(info.file);
     setUpload(true);
@@ -83,48 +70,23 @@ function Home() {
   return (
     <LayoutContainer>
       <HeaderContainer>
-        <HeaderTypography>
+        <HeaderTypography className="headerText">
           VIETNAM NATIONAL UNIVERSITY, HO CHI MINH CITY UNIVERSITY OF
           INFORMATION TECHNOLOGY
-        </HeaderTypography>
-        <HeaderTypography>
+          <br />
           GRADUATION THESIS WEB DEMO AERIAL IMAGE OBJECT DETECTION
         </HeaderTypography>
       </HeaderContainer>
       <ContentContainer>
         <ContentContainerTop>
-          <Avatar
-            size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-            icon={<AntDesignOutlined />}
-          />
-          <Avatar
-            size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-            icon={<AntDesignOutlined />}
-          />
-          <Avatar
-            size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-            icon={<AntDesignOutlined />}
-          />
-          <Avatar
-            size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-            icon={<AntDesignOutlined />}
-          />
-          {/* <UploadContainer
-            name={"file"}
-            onChange={handleFileUpload}
-            onRemove={handleFileRemove}
-            beforeUpload={() => false}
-            maxCount={1}
-          >
-            <ButtonUpload type="primary" icon={<UploadOutlined />}>
-              Click to Upload
-            </ButtonUpload>
-          </UploadContainer> */}
+          {/* <CarouselAuthor /> */}
+          <ListImage />
         </ContentContainerTop>
         <ContentContainerCenter>
           <InputOutput image={imageSrc} position="Input" />
           <ContentSideContainer upload={upload}>
             <SubmitButton
+              className="submitButton"
               disabled={!upload ? true : false}
               type="primary"
               icon={
@@ -147,20 +109,15 @@ function Home() {
             beforeUpload={() => false}
             maxCount={1}
           >
-            <ButtonUpload type="primary" icon={<UploadOutlined />}>
+            <ButtonUpload type="primary" icon={<UploadOutlined />} size="large">
               Click to Upload
             </ButtonUpload>
           </UploadContainer>
+          <History />
         </ContentContainerBottom>
       </ContentContainer>
       <FooterContainer>
-        <FooterTypography>
-          VIETNAM NATIONAL UNIVERSITY, HO CHI MINH CITY UNIVERSITY OF
-          INFORMATION TECHNOLOGY
-        </FooterTypography>
-        <FooterTypography>
-          GRADUATION THESIS WEB DEMO AERIAL IMAGE OBJECT DETECTION
-        </FooterTypography>
+        <CarouselAuthor />
       </FooterContainer>
     </LayoutContainer>
   );
