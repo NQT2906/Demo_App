@@ -7,7 +7,7 @@ export const LayoutContainer = styled.div`
   background-color: #fefefe;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  // overflow: hidden;
 `;
 
 export const HeaderContainer = styled.div`
@@ -103,6 +103,47 @@ export const ContentSideContainer = styled.div<{ upload?: boolean }>`
       height: 6vh;
     }
   }
+
+  .contentCard {
+    width: 20vw;
+    height: 30vh;
+  }
+  .contentImage {
+    width: 20vw;
+    height: 30vh;
+  }
+
+  @media screen and (max-width: 1024px) {
+    .contentCard {
+      width: 30vw;
+      height: 30vh;
+    }
+    .contentImage {
+      width: 30vw;
+      height: 30vh;
+    }
+  }
+
+  @media screen and (max-width: 850px) {
+    .contentCard {
+      width: 30vw;
+      height: 25vh;
+    }
+    .contentImage {
+      width: 30vw;
+      height: 25vh;
+    }
+  }
+  @media screen and (max-width: 700px) {
+    .contentCard {
+      width: 30vw;
+      height: 20vh;
+    }
+    .contentImage {
+      width: 30vw;
+      height: 20vh;
+    }
+  }
 `;
 
 export const UploadContainer = styled(Upload)`
@@ -128,8 +169,8 @@ export const ButtonUpload = styled(Button)`
 `;
 
 export const ContentImage = styled(Image)`
-  width: 20vw;
-  height: 30vh;
+  // width: 20vw;
+  // height: 30vh;
 `;
 
 export const ContentPosition = styled(Typography)`
@@ -137,22 +178,22 @@ export const ContentPosition = styled(Typography)`
   font-weight: bold;
 `;
 
-export const ContentCardLeft = styled(Card)`
-  width: 20vw;
-  height: 30vh;
-`;
-
-export const ContentCard = styled(Card)`
-  width: 20vw;
-  height: 30vh;
+export const ContentCard = styled(Card)<{ isResult?: boolean | false }>`
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  overflow-x: hidden;
+  ${(props) => (props.isResult ? "overflow-y: scroll" : "overflow-y: hidden")};
+  ${(props) =>
+    !props.isResult
+      ? "justify-content: center"
+      : "justify-content: flex-start"};
+  ${(props) =>
+    !props.isResult ? "align-items: center" : "align-items: flex-start"};
 `;
 
-export const ContentCardText = styled(Typography)`
+export const ContentCardText = styled(Typography.Paragraph)`
   font-size: 16px;
+  text-align: justify;
 `;
 
 export const SubmitButton = styled(Button)`

@@ -83,7 +83,7 @@ function Home() {
           <ListImage />
         </ContentContainerTop>
         <ContentContainerCenter>
-          <InputOutput image={imageSrc} position="Input" />
+          <InputOutput imageInput={imageSrc} position="Input" />
           <ContentSideContainer upload={upload}>
             <SubmitButton
               className="submitButton"
@@ -91,15 +91,15 @@ function Home() {
               type="primary"
               icon={
                 loading ? (
-                  <ReloadOutlined spin={true} style={{ fontSize: "50px" }} />
+                  <ReloadOutlined spin={true} style={{ fontSize: "200%" }} />
                 ) : (
-                  <ArrowRightOutlined style={{ fontSize: "50px" }} />
+                  <ArrowRightOutlined style={{ fontSize: "200%" }} />
                 )
               }
               onClick={handleSubmit}
             />
           </ContentSideContainer>
-          <InputOutput image={image64} position="Output" />
+          <InputOutput imageInput={image64} output={image64} position="Output" />
         </ContentContainerCenter>
         <ContentContainerBottom>
           <UploadContainer

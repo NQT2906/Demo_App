@@ -35,7 +35,7 @@ export const AuthorImage = styled(Image)`
 export const CarouselContainer = styled(Carousel)`
   .authorImage {
     width: 90px;
-    height: 90px;
+    height: calc(10vh - 10px);
   }
   // -webkit-user-drag: none;
   // -khtml-user-drag: none;
