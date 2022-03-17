@@ -17,19 +17,36 @@ export const ContentModalContainer = styled.div`
   }
 `;
 
+export const ContentAuthorContainer = styled.div`
+  margin-top: 5px;
+  // width: 100%;
+  // display: flex;
+  // flex-direction: row;
+  // justify-content: space-around;
+`;
+
 export const ContentModaText = styled.p`
   font-size: 16px;
 `;
 
-export const AuthorImage = styled(Image)`
+export const ThumbnailAuthorImage = styled(Image)`
   &:hover {
     cursor: pointer;
   }
+  height: calc(10vh - 10px);
+  width: calc(10vh - 10px);
   // -webkit-user-drag: none;
   // -khtml-user-drag: none;
   // -moz-user-drag: none;
   // -o-user-drag: none;
   // user-drag: none;
+`;
+
+export const AuthorImage = styled(Image)`
+  border-radius: 100px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const CarouselContainer = styled(Carousel)`

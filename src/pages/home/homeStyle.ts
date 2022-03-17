@@ -1,4 +1,4 @@
-import { Typography, Image, Button, Upload, Card } from "antd";
+import { Typography, Image, Button, Upload, Card, Divider } from "antd";
 import styled from "styled-components";
 
 export const LayoutContainer = styled.div`
@@ -12,7 +12,7 @@ export const LayoutContainer = styled.div`
 
 export const HeaderContainer = styled.div`
   width: 100%;
-  height: 10%;
+  height: 18%;
   background-color: #fec107;
   display: flex;
   flex-direction: column;
@@ -20,18 +20,35 @@ export const HeaderContainer = styled.div`
   justify-content: center;
 
   .headerText {
-    font-size: 20px;
+    font-size: 50px;
+    font-weight: bold;
+  }
+
+  @media screen and (max-width: 1500px) {
+    .headerText {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    .headerText {
+      font-size: 18px;
+      font-weight: bold;
+    }
   }
 
   @media screen and (max-width: 650px) {
     .headerText {
-      font-size: 15px;
+      font-size: 16px;
+      font-weight: bold;
     }
   }
 
   @media screen and (max-width: 390px) {
     .headerText {
       font-size: 12px;
+      font-weight: bold;
     }
   }
 `;
@@ -40,14 +57,95 @@ export const HeaderTypography = styled(Typography)`
   // font-size: 2.5vh;
   color: black;
   text-align: center;
-  font-weight: bold;
+  // font-weight: bold;
 `;
 
 export const ContentContainer = styled.div`
   background-color: #fefefe;
-  height: 80%;
+  height: 72%;
   width: 100%;
   color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ContentContainerTop = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 25%;
+  align-items: center;
+  justify-content: space-evenly;
+
+  .headerTopic {
+    font-size: 45px;
+    font-weight: bold;
+  }
+  .headerDemo {
+    font-size: 45px;
+    font-weight: bold;
+    color: red;
+  }
+
+  @media screen and (max-width: 1650px) {
+    .headerTopic {
+      font-size: 40px;
+    }
+    .headerDemo {
+      font-size: 40px;
+    }
+  }
+
+  @media screen and (max-width: 1500px) {
+    .headerTopic {
+      font-size: 24px;
+    }
+    .headerDemo {
+      font-size: 24px;
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    .headerTopic {
+      font-size: 18px;
+    }
+    .headerDemo {
+      font-size: 18px;
+    }
+  }
+
+  @media screen and (max-width: 650px) {
+    .headerTopic {
+      font-size: 16px;
+    }
+    .headerDemo {
+      font-size: 16px;
+    }
+  }
+
+  @media screen and (max-width: 390px) {
+    .headerTopic {
+      font-size: 12px;
+    }
+    .headerDemo {
+      font-size: 12px;
+    }
+  }
+`;
+
+export const ContentContainerTopDivider = styled(Divider)`
+  width: 55%;
+  height: 1px;
+`;
+
+export const ContentContainerTopText = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 50%;
+  justify-content: center;
 `;
 
 export const ContentContainerCenter = styled.div`
@@ -57,7 +155,7 @@ export const ContentContainerCenter = styled.div`
   align-items: center;
   background-color: #fefefe;
   width: 100%;
-  height: 70%;
+  height: 60%;
   color: white;
 `;
 
@@ -69,16 +167,6 @@ export const ContentContainerBottom = styled.div`
   align-items: center;
   justify-content: space-around;
   text-align: center;
-`;
-
-export const ContentContainerTop = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  background-color: #fefefe;
-  width: 100%;
-  height: 15%;
 `;
 
 export const ContentSideContainer = styled.div<{ upload?: boolean }>`
@@ -105,24 +193,27 @@ export const ContentSideContainer = styled.div<{ upload?: boolean }>`
   }
 
   .contentCard {
-    width: 20vw;
-    height: 30vh;
+    width: 30vw;
+    height: 40vh;
   }
   .contentImage {
-    width: 20vw;
-    height: 30vh;
+    width: 30vw;
+    height: 40vh;
+  }
+  .contentCardText {
+    font-size: 20px;
   }
 
-  @media screen and (max-width: 1024px) {
-    .contentCard {
-      width: 30vw;
-      height: 30vh;
-    }
-    .contentImage {
-      width: 30vw;
-      height: 30vh;
-    }
-  }
+  // @media screen and (max-width: 1024px) {
+  //   .contentCard {
+  //     width: 30vw;
+  //     height: 30vh;
+  //   }
+  //   .contentImage {
+  //     width: 30vw;
+  //     height: 30vh;
+  //   }
+  // }
 
   @media screen and (max-width: 850px) {
     .contentCard {
@@ -144,6 +235,17 @@ export const ContentSideContainer = styled.div<{ upload?: boolean }>`
       height: 20vh;
     }
   }
+
+  @media screen and (max-width: 500px) {
+    .contentCardText {
+      font-size: 16px;
+    }
+  }
+  @media screen and (max-width: 400px) {
+    .contentCardText {
+      font-size: 14px;
+    }
+  }
 `;
 
 export const UploadContainer = styled(Upload)`
@@ -152,6 +254,8 @@ export const UploadContainer = styled(Upload)`
     background-color: #fec107;
     color: black;
   }
+  width: 40%;
+  margin-right: 5px;
 `;
 
 export const HistoryContainer = styled.div`
@@ -160,6 +264,8 @@ export const HistoryContainer = styled.div`
     background-color: #fec107;
     color: black;
   }
+  width: 40%;
+  margin-left: 5px;
 `;
 
 export const ButtonUpload = styled(Button)`
@@ -173,9 +279,10 @@ export const ContentImage = styled(Image)`
   // height: 30vh;
 `;
 
-export const ContentPosition = styled(Typography)`
-  font-size: 16px;
+export const ContentPosition = styled(Typography.Text)`
+  font-size: 20px;
   font-weight: bold;
+  width: 50%;
 `;
 
 export const ContentCard = styled(Card)<{ isResult?: boolean | false }>`
@@ -192,7 +299,7 @@ export const ContentCard = styled(Card)<{ isResult?: boolean | false }>`
 `;
 
 export const ContentCardText = styled(Typography.Paragraph)`
-  font-size: 16px;
+  font-size: 20px;
   text-align: justify;
 `;
 
@@ -210,25 +317,6 @@ export const FooterContainer = styled.div`
   background-color: #fec107;
   width: 100%;
   height: 10%;
-`;
-
-export const ContentAuthorContainer = styled.div`
-  // width: 34%;
-  width: 100%;
-  margin-top: 5px;
-
-  // .authorImage {
-  //   width: 90px;
-  //   height: 90px;
-  // }
-  // &:hover {
-  //   cursor: pointer;
-  // }
-  // -webkit-user-drag: none;
-  // -khtml-user-drag: none;
-  // -moz-user-drag: none;
-  // -o-user-drag: none;
-  // user-drag: none;
 `;
 
 export const FooterTypography = styled(Typography)`

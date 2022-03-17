@@ -21,6 +21,21 @@ export const ContentModaText = styled.p`
   font-size: 16px;
 `;
 
+export const ContentContainerSponsor = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  height: 50%;
+  justify-content: space-evenly;
+  // border-bottom: 1px solid black;
+  // padding-bottom: 5px;
+  // padding-top: 5px;
+
+  .sponsorImage {
+    // border-radius: 100px;
+  }
+`;
+
 export const AuthorImage = styled(Image)`
   &:hover {
     cursor: pointer;
@@ -30,6 +45,10 @@ export const AuthorImage = styled(Image)`
   // -moz-user-drag: none;
   // -o-user-drag: none;
   // user-drag: none;
+`;
+
+export const SponsorImage = styled(Image)`
+  height: 100%;
 `;
 
 export const CarouselContainer = styled(Carousel)`

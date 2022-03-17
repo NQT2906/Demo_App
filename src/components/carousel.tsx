@@ -1,20 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
-import { ContentAuthorContainer } from "../pages/home/homeStyle";
-import { ANIMATION_TIME, SWIPE_TIME } from "../common/constants";
 import { Modal } from "antd";
-import AliceCarousel from "react-alice-carousel";
-import "react-alice-carousel/lib/alice-carousel.css";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 import {
   AuthorImage,
   CarouselContainer,
   TypoLink,
   TypoText,
+  ContentAuthorContainer,
+  ThumbnailAuthorImage,
 } from "./carouselStyle";
-
+import { listAuthor } from "../assets/data/listAuthor";
+import { ContentContainerSponsor, SponsorImage } from "./listImageStyle";
+import { listSponsor } from "../assets/data/listSponsor";
 const CarouselAuthor = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [image, setImage] = useState("");
@@ -76,88 +74,29 @@ const CarouselAuthor = () => {
     );
   };
 
-  const itemsJson = [
-    {
-      image:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-      name: "Nguyễn Quang Thuận",
-      birthday: "29/06/2000",
-      facebook: "https://www.facebook.com/nqt290600/",
-      google: "",
-      github: "https://github.com/NQT2906/",
-    },
-    {
-      image:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-      name: "Nguyễn Quang Thuận1",
-      birthday: "29/06/2000",
-      facebook: "https://www.facebook.com/nqt290600/",
-      google: "",
-      github: "https://github.com/NQT2906/",
-    },
-    {
-      image:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-      name: "Nguyễn Quang Thuận2",
-      birthday: "29/06/2000",
-      facebook: "https://www.facebook.com/nqt290600/",
-      google: "",
-      github: "https://github.com/NQT2906/",
-    },
-    {
-      image:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-      name: "Nguyễn Quang Thuận3",
-      birthday: "29/06/2000",
-      facebook: "https://www.facebook.com/nqt290600/",
-      google: "",
-      github: "https://github.com/NQT2906/",
-    },
-    {
-      image:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-      name: "Nguyễn Quang Thuận4",
-      birthday: "29/06/2000",
-      facebook: "https://www.facebook.com/nqt290600/",
-      google: "",
-      github: "https://github.com/NQT2906/",
-    },
-  ];
-
-  const itemCarousel = () => {
-    return itemsJson.map((value, key) => {
-      return (
-        <AuthorImage
-          className="authorImage"
-          key={"key" + key}
-          preview={false}
-          src={value.image}
-          style={{ borderRadius: "100px" }}
-          // width={90}
-          // height={90}
-          // width={"50%"}
-          // height={"50%"}
-          onClick={() => {
-            setImage(value.image);
-            setName(value.name);
-            setBirthday(value.birthday);
-            setGoogle(value.google);
-            setFacebook(value.facebook);
-            setGithub(value.github);
-            showModal();
-          }}
-        />
-      );
-    });
-  };
-
-  const responsive = {
-    0: { items: 1 },
-    624: { items: 2 },
-    1248: { items: 3 },
-  };
-
   return (
+    // <ContentAuthorContainer>
+    //   {listAuthor.map((value, key) => {
+    //     return (
+    //       <ThumbnailAuthorImage
+    //         key={"key" + key}
+    //         src={value.image}
+    //         className="sponsorImage"
+    //         preview={false}
+    //         onClick={() => {
+    //           setImage(value.image);
+    //           setName(value.name);
+    //           setBirthday(value.birthday);
+    //           setGoogle(value.google);
+    //           setFacebook(value.facebook);
+    //           setGithub(value.github);
+    //           showModal();
+    //         }}
+    //       />
+    //     );
+    //   })}
+    //   <ModalAuthor />
+    // </ContentAuthorContainer>
     <ContentAuthorContainer>
       {/* <AliceCarousel
         mouseTracking
@@ -185,9 +124,9 @@ const CarouselAuthor = () => {
         swipeable={true}
         emulateTouch={true}
       >
-        {itemsJson.map((value, key) => {
+        {listAuthor.map((value, key) => {
           return (
-            <AuthorImage
+            <ThumbnailAuthorImage
               className="authorImage"
               key={"key" + key}
               preview={false}
