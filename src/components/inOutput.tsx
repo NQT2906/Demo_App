@@ -25,11 +25,15 @@ const InputOutput = ({
         <ContentImage className="contentImage" src={imageInput} />
       ) : position === "Input" ? (
         <ContentCard className="contentCard">
-          <ContentCardText>No Image Uploaded</ContentCardText>
+          <ContentCardText className="contentCardText">
+            No Image Uploaded
+          </ContentCardText>
         </ContentCard>
       ) : (
         <ContentCard className="contentCard">
-          <ContentCardText>No Image Predicted</ContentCardText>
+          <ContentCardText className="contentCardText">
+            No Image Predicted
+          </ContentCardText>
         </ContentCard>
       )}
 
@@ -59,7 +63,7 @@ const InputOutput = ({
           <ContentCardText>No Image Predicted</ContentCardText>
         </ContentCard>
       )} */}
-      <ContentPosition>{position}</ContentPosition>
+      <ContentPosition className="contentCardText">{position}</ContentPosition>
     </ContentSideContainer>
   );
 };

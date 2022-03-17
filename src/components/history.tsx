@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import {
   ButtonUpload,
-  ContentCard,
-  ContentCardText,
   ContentImage,
   HistoryContainer,
 } from "../pages/home/homeStyle";
@@ -75,6 +73,7 @@ const History = () => {
           icon={<HistoryOutlined />}
           size="large"
           onClick={showModal}
+          className="buttonHistory"
         >
           See history
         </ButtonUpload>
@@ -128,7 +127,11 @@ const History = () => {
             count += 1;
             return (
               <ContentModalContainer key={"key" + count}>
-                <ContentImage src={value.toString()} />
+                <ContentImage
+                  src={value.toString()}
+                  width={"60%"}
+                  height={"35%"}
+                />
                 {/* For OCR */}
                 {/* <ContentCard className="contentCard" isResult={true}>
                   <ContentCardText copyable={true}>

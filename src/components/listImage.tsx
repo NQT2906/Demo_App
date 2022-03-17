@@ -1,53 +1,26 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
-import { ContentAuthorContainer } from "../pages/home/homeStyle";
-import { Avatar } from "antd";
-import { AntDesignOutlined } from "@ant-design/icons";
-
+import { SponsorImage, ContentContainerSponsor } from "./listImageStyle";
+import { listSponsor } from "../assets/data/listSponsor";
 const ListImage = () => {
-  const itemsJson = [
-    {
-      image:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-      name: "Nguyễn Quang Thuận",
-      birthday: "29/06/2000",
-      facebook: "https://www.facebook.com/nqt290600/",
-      google: "",
-      github: "https://github.com/NQT2906/",
-    },
-    {
-      image:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-      name: "Nguyễn Quang Thuận1",
-      birthday: "29/06/2000",
-      facebook: "https://www.facebook.com/nqt290600/",
-      google: "",
-      github: "https://github.com/NQT2906/",
-    },
-    {
-      image:
-        "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-      name: "Nguyễn Quang Thuận2",
-      birthday: "29/06/2000",
-      facebook: "https://www.facebook.com/nqt290600/",
-      google: "",
-      github: "https://github.com/NQT2906/",
-    },
-  ];
-
   return (
-    <>
-      {itemsJson.map((value, key) => {
+    <ContentContainerSponsor>
+      {listSponsor.map((value, key) => {
         return (
-          <Avatar
+          <SponsorImage
             key={"key" + key}
-            size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
-            // icon={<AntDesignOutlined />}
             src={value.image}
+            className="sponsorImage"
+            preview={false}
           />
+          // <Avatar
+          //   key={"key" + key}
+          //   size={{ xs: 55, sm: 75, md: 75, lg: 75, xl: 80, xxl: 100 }}
+          //   src={value.image}
+          //   className="sponsorImage"
+          // />
         );
       })}
-    </>
+    </ContentContainerSponsor>
   );
 };
 

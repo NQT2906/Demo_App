@@ -14,11 +14,15 @@ import {
   ContentContainerTop,
   ContentContainerCenter,
   ContentContainerBottom,
+  ContentCard,
+  ContentContainerTopText,
+  ContentContainerTopDivider,
 } from "./homeStyle";
 import {
   UploadOutlined,
   ArrowRightOutlined,
   ReloadOutlined,
+  InboxOutlined,
 } from "@ant-design/icons";
 import InputOutput from "../../components/inOutput";
 import History from "../../components/history";
@@ -26,6 +30,7 @@ import CarouselAuthor from "../../components/carousel";
 import { SERVER_URL } from "../../common/constants";
 import { Divider } from "antd";
 import ListImage from "../../components/listImage";
+import Dragger from "antd/lib/upload/Dragger";
 
 function Home() {
   const [imageSrc, setImageSrc] = useState("");
@@ -67,22 +72,44 @@ function Home() {
     setUpload(false);
   };
 
+  const props = {
+    name: "file",
+    multiple: false,
+    // action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    onChange(info: any) {
+      setImageSrc(URL.createObjectURL(info.file));
+      setSelectedFile(info.file);
+      setUpload(true);
+    },
+    onDrop(e: any) {
+      console.log("Dropped files", e.dataTransfer.files);
+    },
+  };
+
   return (
     <LayoutContainer>
       <HeaderContainer>
         <HeaderTypography className="headerText">
           VIETNAM NATIONAL UNIVERSITY, HO CHI MINH CITY UNIVERSITY OF
           INFORMATION TECHNOLOGY
-          <br />
-          GRADUATION THESIS WEB DEMO AERIAL IMAGE OBJECT DETECTION
         </HeaderTypography>
+        <ListImage />
       </HeaderContainer>
       <ContentContainer>
         <ContentContainerTop>
           {/* <CarouselAuthor /> */}
-          <ListImage />
+          {/* <ListImage /> */}
+          {/* <ContentContainerTopDivider /> */}
+          <ContentContainerTopText>
+            <HeaderTypography className="headerTopic">
+              GRADUATION THESIS WEB DEMO AERIAL IMAGE OBJECT DETECTION
+            </HeaderTypography>
+            <HeaderTypography className="headerDemo">
+              CAPTION OCR FOR DOCUMENT IMAGE
+            </HeaderTypography>
+          </ContentContainerTopText>
         </ContentContainerTop>
-        <ContentContainerCenter>
+        <ContentContainerCenter className="containerCenter">
           <InputOutput imageInput={imageSrc} position="Input" />
           <ContentSideContainer upload={upload}>
             <SubmitButton
@@ -99,9 +126,13 @@ function Home() {
               onClick={handleSubmit}
             />
           </ContentSideContainer>
-          <InputOutput imageInput={image64} output={image64} position="Output" />
+          <InputOutput
+            imageInput={image64}
+            output={image64}
+            position="Output"
+          />
         </ContentContainerCenter>
-        <ContentContainerBottom>
+        <ContentContainerBottom className="containerBottom">
           <UploadContainer
             name={"file"}
             onChange={handleFileUpload}
@@ -109,7 +140,12 @@ function Home() {
             beforeUpload={() => false}
             maxCount={1}
           >
-            <ButtonUpload type="primary" icon={<UploadOutlined />} size="large">
+            <ButtonUpload
+              type="primary"
+              icon={<UploadOutlined />}
+              size="large"
+              className="buttonUpload"
+            >
               Click to Upload
             </ButtonUpload>
           </UploadContainer>
