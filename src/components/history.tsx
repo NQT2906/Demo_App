@@ -14,7 +14,7 @@ import axios from "axios";
 import { SERVER_URL } from "../common/constants";
 import { Divider, Spin } from "antd";
 
-const History = () => {
+const History = ({ width }: { width: number }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [created, setCreated] = useState<string[]>([]);
   const [image, setImage] = useState<string[]>([]);
@@ -91,11 +91,11 @@ const History = () => {
         <ButtonUpload
           type="primary"
           icon={<HistoryOutlined />}
-          size="large"
+          // size="large"
           onClick={showModal}
-          className="buttonHistory"
+          className="buttonBottom"
         >
-          See history
+          {!(width <= 900) ? "History" : null}
         </ButtonUpload>
       </HistoryContainer>
       {/* 
