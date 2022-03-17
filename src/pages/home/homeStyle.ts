@@ -165,7 +165,8 @@ export const ContentContainerBottom = styled.div`
   width: 100%;
   height: 15%;
   align-items: center;
-  justify-content: space-around;
+  // justify-content: space-around;
+  justify-content: center;
   text-align: center;
 `;
 
@@ -254,7 +255,8 @@ export const UploadContainer = styled(Upload)`
     background-color: #fec107;
     color: black;
   }
-  width: 40%;
+  // width: 40%;
+  width: 15%;
   margin-right: 5px;
 `;
 
@@ -264,7 +266,7 @@ export const HistoryContainer = styled.div`
     background-color: #fec107;
     color: black;
   }
-  width: 40%;
+  width: 11.5%;
   margin-left: 5px;
 `;
 
@@ -272,6 +274,7 @@ export const ButtonUpload = styled(Button)`
   border-radius: 10px;
   background-color: #fec107;
   border: none;
+  width: 100%;
 `;
 
 export const ContentImage = styled(Image)`

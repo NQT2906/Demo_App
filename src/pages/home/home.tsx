@@ -90,8 +90,8 @@ function Home() {
     <LayoutContainer>
       <HeaderContainer>
         <HeaderTypography className="headerText">
-          VIETNAM NATIONAL UNIVERSITY, HO CHI MINH CITY UNIVERSITY OF
-          INFORMATION TECHNOLOGY
+          UNIVERSITY OF INFORMATION TECHNOLOGY, VIETNAM NATIONAL UNIVERSITY HO
+          CHI MINH CITY
         </HeaderTypography>
         <ListImage />
       </HeaderContainer>
@@ -102,10 +102,10 @@ function Home() {
           {/* <ContentContainerTopDivider /> */}
           <ContentContainerTopText>
             <HeaderTypography className="headerTopic">
-              GRADUATION THESIS WEB DEMO AERIAL IMAGE OBJECT DETECTION
+              GRADUATION THESIS WEB DEMO
             </HeaderTypography>
             <HeaderTypography className="headerDemo">
-              CAPTION OCR FOR DOCUMENT IMAGE
+              PARSING VIETNAMESE PUBLICATIONS
             </HeaderTypography>
           </ContentContainerTopText>
         </ContentContainerTop>
@@ -139,6 +139,7 @@ function Home() {
             onRemove={handleFileRemove}
             beforeUpload={() => false}
             maxCount={1}
+            showUploadList={false}
           >
             <ButtonUpload
               type="primary"
