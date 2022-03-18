@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
-import { Modal } from "antd";
-
 import {
   AuthorImage,
   CarouselContainer,
@@ -9,10 +7,13 @@ import {
   TypoText,
   ContentAuthorContainer,
   ThumbnailAuthorImage,
+  ModalContainer,
 } from "./carouselStyle";
 import { listAuthor } from "../assets/data/listAuthor";
-import { ContentContainerSponsor, SponsorImage } from "./listImageStyle";
-import { listSponsor } from "../assets/data/listSponsor";
+import githubImage from "../assets/images/media/github.png";
+import facebookImage from "../assets/images/media/facebook.png";
+import googleImage from "../assets/images/media/google.png";
+
 const CarouselAuthor = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [image, setImage] = useState("");
@@ -34,9 +35,14 @@ const CarouselAuthor = () => {
     setIsModalVisible(false);
   };
 
+  const openInNewTab = (url: string) => {
+    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+    if (newWindow) newWindow.opener = null;
+  };
+
   const ModalAuthor = () => {
     return (
-      <Modal
+      <ModalContainer
         title="Information"
         visible={isModalVisible}
         onOk={handleOk}
@@ -44,61 +50,80 @@ const CarouselAuthor = () => {
         footer={null}
       >
         <AuthorImage src={image} preview={false} width={200} height={200} />
-        {name ? <TypoText>Full Name: {name}</TypoText> : null}
-        {birthday ? <TypoText>Birthday: {birthday}</TypoText> : null}
-        {google ? (
-          <>
-            <TypoText>Google: </TypoText>
-            <TypoLink href={google} target="_blank">
-              {google}
-            </TypoLink>{" "}
-          </>
-        ) : null}
+        {name ? <TypoText>{name}</TypoText> : null}
+        {/* {birthday ? <TypoText>{birthday}</TypoText> : null} */}
+
         {facebook ? (
           <>
-            <TypoText>Facebook: </TypoText>
-            <TypoLink href={facebook} target="_blank">
-              {facebook}
-            </TypoLink>{" "}
+            <AuthorImage
+              className="authorImage"
+              preview={false}
+              src={facebookImage}
+              style={{ borderRadius: "80px" }}
+              onClick={() => {
+                openInNewTab(facebook);
+              }}
+              height={80}
+            />
+          </>
+        ) : null}
+        {google ? (
+          <>
+            <AuthorImage
+              className="authorImage"
+              preview={false}
+              src={googleImage}
+              style={{ borderRadius: "100px" }}
+              onClick={() => {
+                openInNewTab(google);
+              }}
+              height={100}
+            />
           </>
         ) : null}
         {github ? (
           <>
-            <TypoText>Github: </TypoText>
-            <TypoLink href={github} target="_blank">
-              {github}
-            </TypoLink>{" "}
+            <AuthorImage
+              className="authorImage"
+              preview={false}
+              src={githubImage}
+              style={{ borderRadius: "90px" }}
+              onClick={() => {
+                openInNewTab(github);
+              }}
+              height={100}
+            />
           </>
         ) : null}
-      </Modal>
+      </ModalContainer>
     );
   };
 
   return (
-    // <ContentAuthorContainer>
-    //   {listAuthor.map((value, key) => {
-    //     return (
-    //       <ThumbnailAuthorImage
-    //         key={"key" + key}
-    //         src={value.image}
-    //         className="sponsorImage"
-    //         preview={false}
-    //         onClick={() => {
-    //           setImage(value.image);
-    //           setName(value.name);
-    //           setBirthday(value.birthday);
-    //           setGoogle(value.google);
-    //           setFacebook(value.facebook);
-    //           setGithub(value.github);
-    //           showModal();
-    //         }}
-    //       />
-    //     );
-    //   })}
-    //   <ModalAuthor />
-    // </ContentAuthorContainer>
     <ContentAuthorContainer>
-      {/* <AliceCarousel
+      {listAuthor.map((value, key) => {
+        return (
+          <ThumbnailAuthorImage
+            key={"key" + key}
+            src={value.image}
+            className="sponsorImage"
+            preview={false}
+            onClick={() => {
+              setImage(value.image || "");
+              setName(value.name || "");
+              setBirthday(value.birthday || "");
+              setGoogle(value.google || "");
+              setFacebook(value.facebook || "");
+              setGithub(value.github || "");
+              showModal();
+            }}
+          />
+        );
+      })}
+      <ModalAuthor />
+    </ContentAuthorContainer>
+    // <ContentAuthorContainer>
+    /* <AliceCarousel
         mouseTracking
         items={itemCarousel()}
         responsive={responsive}
@@ -110,12 +135,14 @@ const CarouselAuthor = () => {
         innerWidth={window.innerWidth}
         animationDuration={ANIMATION_TIME}
         autoPlayInterval={SWIPE_TIME}
-      /> */}
-      <CarouselContainer
+      /> */
+    /* <CarouselContainer
         infiniteLoop
         useKeyboardArrows
         autoPlay
         centerMode={true}
+        // For 2 person, up to 40
+        // centerSlidePercentage={40}
         centerSlidePercentage={30}
         showStatus={false}
         showIndicators={false}
@@ -133,21 +160,21 @@ const CarouselAuthor = () => {
               src={value.image}
               style={{ borderRadius: "100px" }}
               onClick={() => {
-                setImage(value.image);
-                setName(value.name);
-                setBirthday(value.birthday);
-                setGoogle(value.google);
-                setFacebook(value.facebook);
-                setGithub(value.github);
+                setImage(value.image || "");
+                setName(value.name || "");
+                setBirthday(value.birthday || "");
+                setGoogle(value.google || "");
+                setFacebook(value.facebook || "");
+                setGithub(value.github || "");
                 showModal();
               }}
             />
           );
         })}
       </CarouselContainer>
-      {/* <p>© Web Designed by Thuan Nguyen Quang</p> */}
+      <p>© Web Designed by Thuan Nguyen Quang</p>
       <ModalAuthor />
-    </ContentAuthorContainer>
+    </ContentAuthorContainer> */
   );
 };
 

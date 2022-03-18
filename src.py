@@ -5,12 +5,13 @@ import operator
 from datetime import datetime
 
 # Choose to use a config and initialize the detector
-# config ='/home/object_detection/K18_Minh/demo/mmdetection/pth/cascade_double_heads_focal_loss.py'
-config = '/home/object_detection/K18_SongThuan/ThesisDemo/model/cdersnet_ga/cdersnet_ga.py'
+minh_config = '/home/object_detection/K18_Minh/demo/mmdetection/pth/dh_faster_rcnn_r50_fpn_1x_coco_focal_loss.py'
+thuan_config = '/home/object_detection/K18_SongThuan/ThesisDemo/model/cdersnet_ga/cdersnet_ga.py'
 # Setup a checkpoint file to load
 # checkpoint = '/home/object_detection/K18_Minh/demo/mmdetection/pth/best_bbox_mAP_epoch_12.pth'
-checkpoint = '/home/object_detection/K18_SongThuan/ThesisDemo/model/cdersnet_ga/best_bbox_mAP.pth'
-checkpoint_ocr = '/home/object_detection/K18_SongThuan/ThesisDemo/weights/transformerocr.pth'
+thuan_checkpoint = '/home/object_detection/K18_SongThuan/ThesisDemo/model/cdersnet_ga/best_bbox_mAP.pth'
+thuan_checkpoint_ocr = '/home/object_detection/K18_SongThuan/ThesisDemo/weights/transformerocr.pth'
+minh_checkpoint = '/home/object_detection/K18_Minh/demo/mmdetection/pth/best_bbox_mAP_epoch_12.pth'
 
 import os
 from flask import Flask, flash, request, redirect, url_for, render_template, Response, send_file, jsonify
@@ -24,8 +25,11 @@ import cv2
 import numpy as np
 
 
-input_path = '/home/object_detection/K18_SongThuan/ThesisDemo/demo_input/'
-output_path = '/home/object_detection/K18_SongThuan/ThesisDemo/demo_output/'
+thuan_input_path = '/home/object_detection/K18_SongThuan/ThesisDemo/demo_input/'
+thuan_output_path = '/home/object_detection/K18_SongThuan/ThesisDemo/demo_output/'
+
+minh_input_path = '/home/object_detection/K18_Minh/demo/mmdetection/pth/web/uploads/'
+minh_output_path = "/home/object_detection/K18_Minh/demo/mmdetection/pth/web/static/"
 
 def detect_func(model, img):
     dict_detection = {}
@@ -82,7 +86,7 @@ def infer_reg_func(det_results, img, detector):
   
   
               caption = detector.predict(image_)
-            #   print(caption)
+              # print(caption)
               w, h = draw.textsize(caption, font=font)
               if x2 < h:
                   draw.rectangle(
@@ -108,45 +112,44 @@ def infer_reg_func(det_results, img, detector):
                   )
                   
   idname = time.time()
-  out_file = output_path + str(idname) + "-" + img.split('/')[-1]
+  out_file = thuan_output_path + str(idname) + "-" + img.split('/')[-1]
   cv2.imwrite(out_file, np.asarray(curr_img))
   return out_file  
 
 
-# UPLOAD_FOLDER = "/home/object_detection/K18_Minh/demo/mmdetection/pth/web/uploads/"
-UPLOAD_FOLDER = '/home/object_detection/K18_SongThuan/ThesisDemo/demo_input/'
+#UPLOAD_FOLDER = "/home/object_detection/K18_Minh/demo/mmdetection/pth/web/uploads/"
+UPLOAD_FOLDER = thuan_input_path
 
 app = Flask(__name__, template_folder="/home/object_detection/K18_Minh/demo/mmdetection/pth/web/templates/")
 app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route('/')
-def upload_form():
-    return render_template('upload.html')
+# @app.route('/')
+# def upload_form():
+#     return render_template('upload.html')
 
-@app.route('/', methods=['POST'])
-def run_model():
-    if 'file' not in request.files:
-        flash('No file part')
-        return redirect(request.url)
-    file = request.files['file']
-    if file.filename == '':
-        flash('No image selected for uploading')
-        return redirect(request.url)
-    else:
-        filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-		# print(filename)
-        flash('Image successfully uploaded')
-        model = init_detector(config, checkpoint, device='cuda:0')
-        result = inference_detector(model, UPLOAD_FOLDER + str(filename))
-        show_result_pyplot(model, UPLOAD_FOLDER + str(filename), result, score_thr=0.5, out_file="/home/object_detection/K18_Minh/demo/mmdetection/pth/web/static/out.jpg")
-        return render_template('upload.html', filename=filename)
-        
+# @app.route('/', methods=['POST'])
+# def run_model():
+#     if 'file' not in request.files:
+#         flash('No file part')
+#         return redirect(request.url)
+#     file = request.files['file']
+#     if file.filename == '':
+#         flash('No image selected for uploading')
+#         return redirect(request.url)
+#     else:
+#         filename = secure_filename(file.filename)
+#         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+# 		# print(filename)
+#         flash('Image successfully uploaded')
+#         model = init_detector(config, checkpoint, device='cuda:0')
+#         det_results = detect_func(model, thuan_input_path + str(filename))
+#         result = inference_detector(model, UPLOAD_FOLDER + str(filename))
+#         #show_result_pyplot(model, thuan_input_path + str(filename), result, score_thr=0.5, out_file="/home/object_detection/K18_Minh/demo/mmdetection/pth/web/static/out.jpg")
+#         return render_template('upload.html', filename=filename)
 
-
-@app.route('/upload', methods=['POST'])
-def mobile():
+@app.route('/thuan/upload', methods=['POST'])
+def web_thuan():
     start_time = time.time()
     if 'file' not in request.files:
         flash('No file part')
@@ -157,46 +160,83 @@ def mobile():
         return redirect(request.url)
     else:
         filename = secure_filename(file.filename)
-        file.save(os.path.join(input_path, filename))
+        file.save(os.path.join(thuan_input_path, filename))
         flash('Image successfully uploaded')
-        # model = init_detector(config_detection, check_point_detection, device='cuda:0')
-        model = init_detector(config, checkpoint, device='cuda:0')
-        det_results = detect_func(model, input_path + str(filename))
-        # result = inference_detector(model, UPLOAD_FOLDER + str(filename))
+        model = init_detector(thuan_config, thuan_checkpoint, device='cuda:0')
+        det_results = detect_func(model, thuan_input_path + str(filename))
         #Caption recognition
         config_ocr = Cfg.load_config_from_name('vgg_transformer')
-        config_ocr['weights'] = checkpoint_ocr
+        config_ocr['weights'] = thuan_checkpoint_ocr
         config_ocr['cnn']['pretrained']=False
         config_ocr['device'] = 'cuda:0'
         config_ocr['predictor']['beamsearch']=False
         detector = Predictor(config_ocr)
-        out_file = infer_reg_func(det_results, input_path + str(filename), detector)
+        out_file = infer_reg_func(det_results, thuan_input_path + str(filename), detector)
         
         print(filename)
-        # idname = time.time()
-        # out_file = output_path + str(idname) + "-" + filename
-        # show_result_pyplot(model, output_path + str(filename), det_results, score_thr=0.5, out_file=out_file)
         with open(out_file, "rb") as image_file:
           encoded_string = base64.b64encode(image_file.read())
         test_time = time.time() - start_time
 
         return jsonify(image=encoded_string.decode("utf-8"), time=test_time, name=out_file.split('/')[-1])
 
-@app.route('/history', methods=['GET'])
-def get_history():
-    saved_folder = output_path
+@app.route('/minh/upload', methods=['POST'])
+def mobile_minh():
     start_time = time.time()
-    predicted_images = os.listdir(saved_folder)
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+    file = request.files['file']
+    if file.filename == '':
+        flash('No image selected for uploading')
+        return redirect(request.url)
+    else:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(minh_input_path, filename))
+        flash('Image successfully uploaded')
+        model = init_detector(minh_config, minh_checkpoint, device='cuda:0')
+        result = inference_detector(model, minh_input_path + str(filename))
+        print(filename)
+        idname = time.time()
+
+        out_file = minh_output_path + str(idname) + "-" + filename
+        show_result_pyplot(model, minh_input_path + str(filename), result, score_thr=0.5, out_file=out_file)
+        with open(out_file, "rb") as image_file:
+          encoded_string = base64.b64encode(image_file.read())
+        test_time = time.time() - start_time
+
+        return jsonify(image=encoded_string.decode("utf-8"), time=test_time, name=str(idname) + "-" + filename)
+
+
+@app.route('/thuan/history', methods=['GET'])
+def get_history_thuan():
+    start_time = time.time()
+    predicted_images = os.listdir(thuan_output_path)
     images = []
     for img in predicted_images:
-      with open(saved_folder + img, "rb") as image_file:
+      with open(thuan_output_path + img, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
-        img_dict = {"name": img, "created": str(datetime.fromtimestamp(os.path.getctime(saved_folder + img))), "image": encoded_string.decode("utf-8")}
+        img_dict = {"name": img, "created": str(datetime.fromtimestamp(os.path.getctime(thuan_output_path + img))), "image": encoded_string.decode("utf-8")}
+        images.append(img_dict)
+    test_time = time.time() - start_time
+    num_history = 10
+    return jsonify(images=sorted(images, key=operator.itemgetter('created'), reverse=True)[0 : num_history], total=num_history, time=test_time)
+   
+@app.route('/minh/history', methods=['GET'])
+def get_history_minh():
+    start_time = time.time()
+    predicted_images = os.listdir(minh_output_path)
+    images = []
+    for img in predicted_images:
+      with open(minh_output_path + img, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+        img_dict = {"name": img, "created": str(datetime.fromtimestamp(os.path.getctime(minh_output_path + img))), "image": encoded_string.decode("utf-8")}
         images.append(img_dict)
     test_time = time.time() - start_time
     num_history = 10
     # return jsonify(images=sorted(images, key=operator.itemgetter('created'), reverse=True), total=len(predicted_images), time=test_time)
     return jsonify(images=sorted(images, key=operator.itemgetter('created'), reverse=True)[0 : num_history], total=num_history, time=test_time)
    
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

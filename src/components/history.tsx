@@ -14,7 +14,7 @@ import axios from "axios";
 import { SERVER_URL } from "../common/constants";
 import { Divider, Spin } from "antd";
 
-const History = () => {
+const History = ({ width }: { width: number }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [created, setCreated] = useState<string[]>([]);
   const [image, setImage] = useState<string[]>([]);
@@ -63,6 +63,26 @@ const History = () => {
 
   let count = -1;
 
+  // // Maybe use in future
+  // const handleRemove = async (name_image: string) => {
+  //   try {
+  //     const data = {
+  //       image_name: name_image,
+  //     };
+  //     const response = await axios({
+  //       method: "POST",
+  //       url: `${SERVER_URL}/remove`,
+  //       data: data,
+  //       headers: {
+  //         "Content-Type": "text/plain",
+  //       },
+  //     });
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   const antIcon = <LoadingOutlined style={{ fontSize: 64 }} spin />;
 
   return (
@@ -71,11 +91,11 @@ const History = () => {
         <ButtonUpload
           type="primary"
           icon={<HistoryOutlined />}
-          size="large"
+          // size="large"
           onClick={showModal}
-          className="buttonHistory"
+          className="buttonBottom"
         >
-          See history
+          {!(width <= 900) ? "History" : null}
         </ButtonUpload>
       </HistoryContainer>
       {/* 
@@ -127,6 +147,8 @@ const History = () => {
             count += 1;
             return (
               <ContentModalContainer key={"key" + count}>
+                {/* Maybe use in future */}
+                {/* <DeleteOutlined onClick={() => handleRemove(name[count])} /> */}
                 <ContentImage
                   src={value.toString()}
                   width={"60%"}
@@ -145,8 +167,12 @@ const History = () => {
                     deserunt mollit anim id est laborum
                   </ContentCardText>
                 </ContentCard> */}
-                <ContentModaText>{name[count]}</ContentModaText>
                 <ContentModaText>
+                  {"Image name: "}
+                  {name[count]}
+                </ContentModaText>
+                <ContentModaText>
+                  {"Created time: "}
                   {created[count].split(" ")[1].split(".")[0].toString() +
                     " " +
                     created[count].split(" ")[0].toString()}

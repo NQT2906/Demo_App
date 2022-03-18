@@ -1,15 +1,16 @@
 import uit_together from "../images/uit_together.png";
-import uit_ise from "../images/ise.png";
+import uit_se from "../images/Logo_SE.png";
 import uit from "../images/Logo_UIT_Web_Transparent.png";
 
 export const listSponsor = [
   {
     image: uit,
   },
+
   {
-    image: uit_together,
+    image: uit_se,
   },
   {
-    image: uit_ise,
+    image: uit_together,
   },
 ];

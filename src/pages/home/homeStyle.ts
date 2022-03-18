@@ -20,27 +20,27 @@ export const HeaderContainer = styled.div`
   justify-content: center;
 
   .headerText {
-    font-size: 50px;
+    font-size: 20px;
     font-weight: bold;
   }
 
   @media screen and (max-width: 1500px) {
-    .headerText {
-      font-size: 24px;
-      font-weight: bold;
-    }
-  }
-
-  @media screen and (max-width: 800px) {
     .headerText {
       font-size: 18px;
       font-weight: bold;
     }
   }
 
+  // @media screen and (max-width: 800px) {
+  //   .headerText {
+  //     font-size: 18px;
+  //     font-weight: bold;
+  //   }
+  // }
+
   @media screen and (max-width: 650px) {
     .headerText {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
     }
   }
@@ -57,6 +57,7 @@ export const HeaderTypography = styled(Typography)`
   // font-size: 2.5vh;
   color: black;
   text-align: center;
+  // height: 50%;
   // font-weight: bold;
 `;
 
@@ -80,30 +81,30 @@ export const ContentContainerTop = styled.div`
   justify-content: space-evenly;
 
   .headerTopic {
-    font-size: 45px;
+    font-size: 20px;
     font-weight: bold;
   }
   .headerDemo {
-    font-size: 45px;
+    font-size: 20px;
     font-weight: bold;
     color: red;
   }
 
-  @media screen and (max-width: 1650px) {
-    .headerTopic {
-      font-size: 40px;
-    }
-    .headerDemo {
-      font-size: 40px;
-    }
-  }
+  // @media screen and (max-width: 1650px) {
+  //   .headerTopic {
+  //     font-size: 28px;
+  //   }
+  //   .headerDemo {
+  //     font-size: 28px;
+  //   }
+  // }
 
   @media screen and (max-width: 1500px) {
     .headerTopic {
-      font-size: 24px;
+      font-size: 18px;
     }
     .headerDemo {
-      font-size: 24px;
+      font-size: 18px;
     }
   }
 
@@ -166,7 +167,43 @@ export const ContentContainerBottom = styled.div`
   height: 15%;
   align-items: center;
   justify-content: space-around;
+  // justify-content: center;
   text-align: center;
+
+  .buttonBottom {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  @media screen and (max-width: 2300px) {
+    .buttonBottom {
+      font-size: 27px;
+    }
+  }
+
+  @media screen and (max-width: 1900px) {
+    .buttonBottom {
+      font-size: 22px;
+    }
+  }
+
+  @media screen and (max-width: 1500px) {
+    .buttonBottom {
+      font-size: 20px;
+    }
+  }
+
+  @media screen and (max-width: 1300px) {
+    .buttonBottom {
+      font-size: 16px;
+    }
+  }
+
+  @media screen and (max-width: 1100px) {
+    .buttonBottom {
+      font-size: 12px;
+    }
+  }
 `;
 
 export const ContentSideContainer = styled.div<{ upload?: boolean }>`
@@ -254,8 +291,8 @@ export const UploadContainer = styled(Upload)`
     background-color: #fec107;
     color: black;
   }
-  width: 40%;
-  margin-right: 5px;
+  // width: 40%;
+  // margin-right: 5px;
 `;
 
 export const HistoryContainer = styled.div`
@@ -264,14 +301,37 @@ export const HistoryContainer = styled.div`
     background-color: #fec107;
     color: black;
   }
-  width: 40%;
-  margin-left: 5px;
+  // margin-left: 5px;
+  // margin-right: 5px;
+`;
+
+export const DownloadContainer = styled.div<{ predicted?: boolean }>`
+  margin-top: 10px;
+  .ant-btn-primary {
+    background-color: #fec107;
+    color: black;
+  }
+  // margin-left: 5px;
+  // margin-right: 5px;
+  .ant-btn-primary {
+    ${(props) =>
+      props.predicted
+        ? "background-color: #f5f5f5"
+        : "background-color: #fec107"}; 
+    ${(props) => (props.predicted ? "color: #b8b8b8" : "color: black")}
+  }
 `;
 
 export const ButtonUpload = styled(Button)`
   border-radius: 10px;
   background-color: #fec107;
   border: none;
+  width: 10vw;
+  height: 5vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ContentImage = styled(Image)`
