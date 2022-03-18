@@ -20,7 +20,7 @@ export const HeaderContainer = styled.div`
   justify-content: center;
 
   .headerText {
-    font-size: 50px;
+    font-size: 20px;
     font-weight: bold;
   }
 
@@ -81,30 +81,30 @@ export const ContentContainerTop = styled.div`
   justify-content: space-evenly;
 
   .headerTopic {
-    font-size: 45px;
+    font-size: 20px;
     font-weight: bold;
   }
   .headerDemo {
-    font-size: 45px;
+    font-size: 20px;
     font-weight: bold;
     color: red;
   }
 
-  @media screen and (max-width: 1650px) {
-    .headerTopic {
-      font-size: 40px;
-    }
-    .headerDemo {
-      font-size: 40px;
-    }
-  }
+  // @media screen and (max-width: 1650px) {
+  //   .headerTopic {
+  //     font-size: 28px;
+  //   }
+  //   .headerDemo {
+  //     font-size: 28px;
+  //   }
+  // }
 
   @media screen and (max-width: 1500px) {
     .headerTopic {
-      font-size: 24px;
+      font-size: 18px;
     }
     .headerDemo {
-      font-size: 24px;
+      font-size: 18px;
     }
   }
 
@@ -317,7 +317,8 @@ export const DownloadContainer = styled.div<{ predicted?: boolean }>`
     ${(props) =>
       props.predicted
         ? "background-color: #f5f5f5"
-        : "background-color: #fec107"}
+        : "background-color: #fec107"}; 
+    ${(props) => (props.predicted ? "color: #b8b8b8" : "color: black")}
   }
 `;
 

@@ -11,6 +11,7 @@ const ListImage = () => {
             src={value.image}
             className="sponsorImage"
             preview={false}
+            // height={key === 1 ? "12vh" : "100%"}
           />
           // <Avatar
           //   key={"key" + key}
