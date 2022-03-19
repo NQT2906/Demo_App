@@ -195,21 +195,19 @@ const History = ({ width }: { width: number }) => {
                     " " +
                     created[key].split(" ")[0].toString()}
                 </ContentModaText>
-                <ContentModaText>
-                  <DownloadContainer>
-                    <ButtonUpload
-                      type="primary"
-                      icon={<CloudDownloadOutlined />}
-                      // size="large"
-                      onClick={() => {
-                        downloadTxtFile(location[key], name[key]);
-                      }}
-                      className="buttonBottom"
-                    >
-                      {!(width <= 900) ? "Download" : null}
-                    </ButtonUpload>
-                  </DownloadContainer>
-                </ContentModaText>
+                <DownloadContainer>
+                  <ButtonUpload
+                    type="primary"
+                    icon={<CloudDownloadOutlined />}
+                    // size="large"
+                    onClick={() => {
+                      downloadTxtFile(location[key], name[key]);
+                    }}
+                    className="buttonBottom"
+                  >
+                    {!(width <= 900) ? "Download" : null}
+                  </ButtonUpload>
+                </DownloadContainer>
                 <Divider style={{ color: "black" }} />
               </ContentModalContainer>
             );
