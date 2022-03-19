@@ -55,7 +55,7 @@ function Home() {
       });
       setImage64("data:image/png;base64," + response.data.image);
       setTextLocation(response.data.textLocation);
-      setTextTitle(response.data.title);
+      setTextTitle(response.data.name);
     } catch (error) {
       console.log(error);
     }

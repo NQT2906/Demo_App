@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   ButtonUpload,
   ContentImage,
+  DownloadContainer,
   HistoryContainer,
 } from "../pages/home/homeStyle";
 import {
@@ -9,7 +10,11 @@ import {
   ContentModaText,
   ModalContainer,
 } from "./historyStyle";
-import { HistoryOutlined, LoadingOutlined } from "@ant-design/icons";
+import {
+  HistoryOutlined,
+  LoadingOutlined,
+  CloudDownloadOutlined,
+} from "@ant-design/icons";
 import axios from "axios";
 import { SERVER_URL } from "../common/constants";
 import { Divider, Spin } from "antd";
@@ -19,6 +24,7 @@ const History = ({ width }: { width: number }) => {
   const [created, setCreated] = useState<string[]>([]);
   const [image, setImage] = useState<string[]>([]);
   const [name, setName] = useState<string[]>([]);
+  const [location, setLocation] = useState<string[]>([]);
   // const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState(false);
 
@@ -32,15 +38,18 @@ const History = ({ width }: { width: number }) => {
       let createdTemp: string[] = [];
       let imageTemp: string[] = [];
       let nameTemp: string[] = [];
+      let locationTemp: string[] = [];
       response.data.images.map((value: any) => {
         createdTemp = [...createdTemp, value.created];
         imageTemp = [...imageTemp, "data:image/png;base64," + value.image];
         nameTemp = [...nameTemp, value.name];
+        locationTemp = [...locationTemp, value.textLocation];
         return 0;
       });
       setCreated(createdTemp);
       setImage(imageTemp);
       setName(nameTemp);
+      setLocation(locationTemp);
       // setTotal(response.data.total);
     } catch (error) {
       console.log(error);
@@ -61,8 +70,6 @@ const History = ({ width }: { width: number }) => {
     setIsModalVisible(false);
   };
 
-  let count = -1;
-
   // // Maybe use in future
   // const handleRemove = async (name_image: string) => {
   //   try {
@@ -82,6 +89,17 @@ const History = ({ width }: { width: number }) => {
   //     console.log(error);
   //   }
   // };
+
+  const downloadTxtFile = (text: string, title: string) => {
+    const element = document.createElement("a");
+    const file = new Blob([text], {
+      type: "text/plain",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = title + ".txt";
+    document.body.appendChild(element);
+    element.click();
+  };
 
   const antIcon = <LoadingOutlined style={{ fontSize: 64 }} spin />;
 
@@ -119,13 +137,13 @@ const History = ({ width }: { width: number }) => {
           image.map((value) => {
             count += 1;
             return (
-              <ContentModalContainer key={"key" + count}>
+              <ContentModalContainer key={"key" + key}>
                 <ContentImage src={value.toString()} />
-                <ContentModaText>{name[count]}</ContentModaText>
+                <ContentModaText>{name[key]}</ContentModaText>
                 <ContentModaText>
-                  {created[count].split(" ")[1].split(".")[0].toString() +
+                  {created[key].split(" ")[1].split(".")[0].toString() +
                     " " +
-                    created[count].split(" ")[0].toString()}
+                    created[key].split(" ")[0].toString()}
                 </ContentModaText>
                 <Divider style={{ color: "black" }} />
               </ContentModalContainer>
@@ -143,12 +161,11 @@ const History = ({ width }: { width: number }) => {
           footer={null}
           bodyStyle={{ height: "75vh", overflowY: "scroll" }}
         >
-          {image.map((value) => {
-            count += 1;
+          {image.map((value, key) => {
             return (
-              <ContentModalContainer key={"key" + count}>
+              <ContentModalContainer key={"key" + key}>
                 {/* Maybe use in future */}
-                {/* <DeleteOutlined onClick={() => handleRemove(name[count])} /> */}
+
                 <ContentImage
                   src={value.toString()}
                   width={"60%"}
@@ -169,13 +186,29 @@ const History = ({ width }: { width: number }) => {
                 </ContentCard> */}
                 <ContentModaText>
                   {"Image name: "}
-                  {name[count]}
+                  {name[key]}
                 </ContentModaText>
+
                 <ContentModaText>
                   {"Created time: "}
-                  {created[count].split(" ")[1].split(".")[0].toString() +
+                  {created[key].split(" ")[1].split(".")[0].toString() +
                     " " +
-                    created[count].split(" ")[0].toString()}
+                    created[key].split(" ")[0].toString()}
+                </ContentModaText>
+                <ContentModaText>
+                  <DownloadContainer>
+                    <ButtonUpload
+                      type="primary"
+                      icon={<CloudDownloadOutlined />}
+                      // size="large"
+                      onClick={() => {
+                        downloadTxtFile(location[key], name[key]);
+                      }}
+                      className="buttonBottom"
+                    >
+                      {!(width <= 900) ? "Download" : null}
+                    </ButtonUpload>
+                  </DownloadContainer>
                 </ContentModaText>
                 <Divider style={{ color: "black" }} />
               </ContentModalContainer>
