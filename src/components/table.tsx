@@ -12,6 +12,7 @@ const TableAnnotation = ({
   title: string;
 }) => {
   const [data, setData] = useState<any[]>([]);
+  const [object, setObject] = useState<any[]>([]);
 
   const columns = [
     {
@@ -21,20 +22,7 @@ const TableAnnotation = ({
     {
       title: "Object",
       dataIndex: "object",
-      filters: [
-        {
-          text: "Figure",
-          value: "Figure",
-        },
-        {
-          text: "Caption",
-          value: "Caption",
-        },
-        {
-          text: "Table",
-          value: "Table",
-        },
-      ],
+      filters: object,
       filterSearch: true,
       onFilter: (value: any, record: any) => {
         return record.object === value;
@@ -71,6 +59,7 @@ const TableAnnotation = ({
   useEffect(() => {
     const locationTemp = JSON.parse(location)[title];
     let dataTemp: any[] = [];
+    let objectTemp: any[] = [];
     if (locationTemp) {
       for (let i = 0; i < locationTemp.length; i++) {
         dataTemp = [
@@ -86,14 +75,34 @@ const TableAnnotation = ({
             score: locationTemp[i][5],
           },
         ];
+        objectTemp = [
+          ...objectTemp,
+          {
+            text:
+              locationTemp[i][0].charAt(0).toUpperCase() +
+              locationTemp[i][0].slice(1, locationTemp[i][0].length + 1),
+            value:
+              locationTemp[i][0].charAt(0).toUpperCase() +
+              locationTemp[i][0].slice(1, locationTemp[i][0].length + 1),
+          },
+        ];
       }
     }
+
+    // objectTemp = [...new Set(objectTemp.map((item) => item.value))];
+    const uniqueObjects: any[] = [];
+    objectTemp.map((item) => {
+      var findItem = uniqueObjects.find((x) => x.value === item.value);
+      if (!findItem) uniqueObjects.push(item);
+    });
+
     setData(dataTemp);
+    setObject(uniqueObjects);
   }, []);
 
-  function onChange(pagination: any, filters: any, sorter: any, extra: any) {
-    console.log("params", pagination, filters, sorter, extra);
-  }
+  // function onChange(pagination: any, filters: any, sorter: any, extra: any) {
+  //   console.log("params", pagination, filters, sorter, extra);
+  // }
 
   return (
     <>
