@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const ModalContainer = styled(Modal)<{ loading: boolean }>`
   .ant-modal-body {
-    height: 75vh;
+    height: 70vh;
     overflow-y: scroll;
     ${(props) => (!props.loading ? "display: flex" : null)};
     ${(props) => (!props.loading ? "flex-direction: column" : null)};
