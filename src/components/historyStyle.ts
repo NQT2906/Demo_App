@@ -28,6 +28,7 @@ export const ContentModalContainer = styled.div`
 
 export const ContentModaText = styled.p`
   font-size: 16px;
+  text-align: center;
 `;
 
 export const DownloadContainer = styled.div`
