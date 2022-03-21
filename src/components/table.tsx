@@ -86,9 +86,9 @@ const TableAnnotation = ({
     setObject(uniqueObjects);
   }, []);
 
-  function onChange(pagination: any, filters: any, sorter: any, extra: any) {
-    console.log("params", pagination, filters, sorter, extra);
-  }
+  // function onChange(pagination: any, filters: any, sorter: any, extra: any) {
+  //   console.log("params", pagination, filters, sorter, extra);
+  // }
 
   return (
     <>

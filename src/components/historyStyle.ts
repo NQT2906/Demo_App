@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Collapse, Modal } from "antd";
 import styled from "styled-components";
 
 export const ModalContainer = styled(Modal)<{ loading: boolean }>`
@@ -31,4 +31,10 @@ export const DownloadContainer = styled.div`
     color: black;
   }
   align-self: flex-end;
+`;
+
+export const CollapseContainer = styled(Collapse)`
+  .ant-collapse-header {
+    background-color: #fafafa;
+  }
 `;

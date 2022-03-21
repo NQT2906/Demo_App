@@ -9,6 +9,7 @@ import {
   ContentModaText,
   ModalContainer,
   DownloadContainer,
+  CollapseContainer,
 } from "./historyStyle";
 import {
   HistoryOutlined,
@@ -17,7 +18,7 @@ import {
 } from "@ant-design/icons";
 import axios from "axios";
 import { SERVER_URL } from "../common/constants";
-import { Divider, Spin } from "antd";
+import { Collapse, Divider, Spin } from "antd";
 import TableAnnotation from "./table";
 
 const History = ({ width }: { width: number }) => {
@@ -80,6 +81,12 @@ const History = ({ width }: { width: number }) => {
     element.click();
   };
 
+  const { Panel } = Collapse;
+
+  function callback(key: any) {
+    console.log(key);
+  }
+
   const antIcon = <LoadingOutlined style={{ fontSize: 64 }} spin />;
 
   const ModalHistory = () => {
@@ -103,16 +110,30 @@ const History = ({ width }: { width: number }) => {
                 />
                 <ContentModaText>
                   {"Image name: "}
-                  {name[key]}
+                  {/* {name[key].slice(1, name[key].split("-").length)} */}
+                  {name[key].substring(name[key].indexOf("-") + 1)}
                 </ContentModaText>
 
                 <ContentModaText>
                   {"Created time: "}
-                  {created[key].split(" ")[1].split(".")[0].toString() +
+                  {created[key].split(" ")[0].toString() +
                     " " +
-                    created[key].split(" ")[0].toString()}
+                    created[key].split(" ")[1].split(".")[0].toString()}
                 </ContentModaText>
-                <TableAnnotation location={location[key]} title={name[key]} />
+                {/* <TableAnnotation location={location[key]} title={name[key]} /> */}
+                <CollapseContainer
+                  bordered={false}
+                  defaultActiveKey={["0"]}
+                  onChange={callback}
+                  ghost
+                >
+                  <Panel header="Click to see details" key="1">
+                    <TableAnnotation
+                      location={location[key]}
+                      title={name[key]}
+                    />
+                  </Panel>
+                </CollapseContainer>
 
                 <DownloadContainer>
                   <ButtonUpload
