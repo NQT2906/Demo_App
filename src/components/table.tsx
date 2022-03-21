@@ -2,7 +2,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Table } from "antd";
-import { tableColumnTextFilterConfig } from "./tableUtils";
 
 const TableAnnotation = ({
   location = "",
