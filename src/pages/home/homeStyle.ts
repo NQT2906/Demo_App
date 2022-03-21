@@ -54,11 +54,8 @@ export const HeaderContainer = styled.div`
 `;
 
 export const HeaderTypography = styled(Typography)`
-  // font-size: 2.5vh;
   color: black;
   text-align: center;
-  // height: 50%;
-  // font-weight: bold;
 `;
 
 export const ContentContainer = styled.div`
@@ -167,7 +164,6 @@ export const ContentContainerBottom = styled.div`
   height: 15%;
   align-items: center;
   justify-content: space-around;
-  // justify-content: center;
   text-align: center;
 
   .buttonBottom {
@@ -291,8 +287,6 @@ export const UploadContainer = styled(Upload)`
     background-color: #fec107;
     color: black;
   }
-  // width: 40%;
-  // margin-right: 5px;
 `;
 
 export const HistoryContainer = styled.div`
@@ -301,8 +295,6 @@ export const HistoryContainer = styled.div`
     background-color: #fec107;
     color: black;
   }
-  // margin-left: 5px;
-  // margin-right: 5px;
 `;
 
 export const DownloadContainer = styled.div<{ predicted?: boolean }>`
@@ -311,13 +303,11 @@ export const DownloadContainer = styled.div<{ predicted?: boolean }>`
     background-color: #fec107;
     color: black;
   }
-  // margin-left: 5px;
-  // margin-right: 5px;
   .ant-btn-primary {
     ${(props) =>
       props.predicted
         ? "background-color: #f5f5f5"
-        : "background-color: #fec107"}; 
+        : "background-color: #fec107"};
     ${(props) => (props.predicted ? "color: #b8b8b8" : "color: black")}
   }
 `;
@@ -337,6 +327,8 @@ export const ButtonUpload = styled(Button)`
 export const ContentImage = styled(Image)`
   // width: 20vw;
   // height: 30vh;
+  // flex: 1;
+  // resize-mode: cover;
 `;
 
 export const ContentPosition = styled(Typography.Text)`
@@ -364,8 +356,6 @@ export const ContentCardText = styled(Typography.Paragraph)`
 `;
 
 export const SubmitButton = styled(Button)`
-  // width: 8vw;
-  // height: 8vh;
   font-weigth: bold;
   color: white;
   border: none;

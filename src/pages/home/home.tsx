@@ -27,6 +27,7 @@ import CarouselAuthor from "../../components/carousel";
 import { SERVER_URL, TOPIC } from "../../common/constants";
 import ListImage from "../../components/listImage";
 import Download from "../../components/download";
+import Detail from "../../components/details";
 
 function Home() {
   const [imageSrc, setImageSrc] = useState("");
@@ -160,6 +161,7 @@ function Home() {
           </UploadContainer>
           <History width={width} />
           <Download width={width} text={textLocation} title={textTitle} />
+          <Detail width={width} location={textLocation} title={textTitle} />
         </ContentContainerBottom>
       </ContentContainer>
       <FooterContainer>
