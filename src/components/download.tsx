@@ -1,6 +1,6 @@
 import React from "react";
 import { ButtonUpload, DownloadContainer } from "../pages/home/homeStyle";
-import { CloudDownloadOutlined } from "@ant-design/icons";
+import { DownloadOutlined } from "@ant-design/icons";
 
 const Download = ({
   width,
@@ -27,7 +27,7 @@ const Download = ({
       <DownloadContainer predicted={title !== "" ? false : true}>
         <ButtonUpload
           type="primary"
-          icon={<CloudDownloadOutlined />}
+          icon={<DownloadOutlined />}
           // size="large"
           onClick={downloadTxtFile}
           className="buttonBottom"

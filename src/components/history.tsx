@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import {
-  ButtonUpload,
-  ContentImage,
-  HistoryContainer,
-} from "../pages/home/homeStyle";
-import {
   ContentModalContainer,
   ContentModaText,
   ModalContainer,
   DownloadContainer,
   CollapseContainer,
+  ButtonUpload,
+  ContentImage,
+  HistoryContainer,
 } from "./historyStyle";
 import {
   HistoryOutlined,
   LoadingOutlined,
-  CloudDownloadOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
 import { SERVER_URL } from "../common/constants";
@@ -133,7 +131,7 @@ const History = ({ width }: { width: number }) => {
                 <DownloadContainer>
                   <ButtonUpload
                     type="primary"
-                    icon={<CloudDownloadOutlined />}
+                    icon={<DownloadOutlined />}
                     // size="large"
                     onClick={() => {
                       downloadTxtFile(location[key], name[key]);
