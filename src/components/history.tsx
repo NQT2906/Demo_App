@@ -83,10 +83,6 @@ const History = ({ width }: { width: number }) => {
 
   const { Panel } = Collapse;
 
-  function callback(key: any) {
-    console.log(key);
-  }
-
   const antIcon = <LoadingOutlined style={{ fontSize: 64 }} spin />;
 
   const ModalHistory = () => {
@@ -124,7 +120,6 @@ const History = ({ width }: { width: number }) => {
                 <CollapseContainer
                   bordered={false}
                   defaultActiveKey={["0"]}
-                  onChange={callback}
                   ghost
                 >
                   <Panel header="Click to see details" key="1">
