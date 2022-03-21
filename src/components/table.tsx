@@ -33,20 +33,6 @@ const TableAnnotation = ({
       dataIndex: "annotation",
     },
     {
-      title: "Caption",
-      dataIndex: "caption",
-      render: (text: string) => text,
-      ...tableColumnTextFilterConfig<{ title: string; dataIndex: string }>(),
-      onFilter: (value: any, record: any) => {
-        return record.caption.toLowerCase().includes(value.toLowerCase());
-      },
-      onreset: (value: any, record: any) => {
-        console.log(value);
-        console.log(record.caption);
-        return record.caption.includes("");
-      },
-    },
-    {
       title: "Score",
       dataIndex: "score",
       sorter: (a: { score: number }, b: { score: number }) => a.score - b.score,
