@@ -8,7 +8,7 @@ In the project directory, you can run:
 
 ### `npm install`
 
-Install library and packed which are needed to create to the app.\
+Install library and packed which are needed to create to the app.
 
 ### `create file env in folder DEMO_APP`
 
