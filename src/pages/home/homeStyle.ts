@@ -7,7 +7,9 @@ export const LayoutContainer = styled.div`
   background-color: #fefefe;
   display: flex;
   flex-direction: column;
-  // overflow: hidden;
+  overflow: auto;
+  // min-height: 650px;
+  // min-width: 650px;
 `;
 
 export const HeaderContainer = styled.div`
