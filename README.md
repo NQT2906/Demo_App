@@ -6,6 +6,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `npm install`
+
+Install library and packed which are needed to create to the app.\
+
+### `create file env in folder DEMO_APP`
+
+Create file .env in folder DEMO_APP with content below:\
+REACT_APP_SERVER_URL=http://192.168.20.166:3000/minh
+
 ### `npm start`
 
 Runs the app in the development mode.\
