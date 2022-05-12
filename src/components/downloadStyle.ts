@@ -1,4 +1,4 @@
-import { Button, Collapse, Modal, Image } from "antd";
+import { Collapse, Modal } from "antd";
 import styled from "styled-components";
 
 export const ModalContainer = styled(Modal)<{ loading?: boolean }>`
@@ -28,7 +28,6 @@ export const ContentModalContainer = styled.div`
 
 export const ContentModaText = styled.p`
   font-size: 16px;
-  text-align: center;
 `;
 
 export const DownloadContainer = styled.div`
@@ -45,31 +44,4 @@ export const CollapseContainer = styled(Collapse)`
   .ant-collapse-header {
     background-color: #fafafa;
   }
-`;
-
-export const ButtonUpload = styled(Button)`
-  border-radius: 10px;
-  background-color: #fec107;
-  border: none;
-  width: 10vw;
-  height: 5vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const ContentImage = styled(Image)`
-  // width: 20vw;
-  // height: 30vh;
-`;
-
-export const HistoryContainer = styled.div`
-  margin-top: 10px;
-  .ant-btn-primary {
-    background-color: #fec107;
-    color: black;
-  }
-  // margin-left: 5px;
-  // margin-right: 5px;
 `;

@@ -22,7 +22,9 @@ const InputOutput = ({
     <ContentSideContainer>
       {/* For Predicted */}
       {imageInput ? (
-        <ContentImage className="contentImage" src={imageInput} />
+        <ContentCard className="contentCard">
+          <ContentImage className="contentImage" src={imageInput} />
+        </ContentCard>
       ) : position === "Input" ? (
         <ContentCard className="contentCard">
           <ContentCardText className="contentCardText">

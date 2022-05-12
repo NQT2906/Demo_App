@@ -6,10 +6,11 @@ export const listSponsor = [
   {
     image: uit,
   },
-  {
-    image: uit_together,
-  },
+
   {
     image: uit_ise,
+  },
+  {
+    image: uit_together,
   },
 ];

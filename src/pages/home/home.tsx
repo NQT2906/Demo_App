@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   ButtonUpload,
@@ -14,23 +14,20 @@ import {
   ContentContainerTop,
   ContentContainerCenter,
   ContentContainerBottom,
-  ContentCard,
   ContentContainerTopText,
-  ContentContainerTopDivider,
 } from "./homeStyle";
 import {
   UploadOutlined,
   ArrowRightOutlined,
   ReloadOutlined,
-  InboxOutlined,
 } from "@ant-design/icons";
 import InputOutput from "../../components/inOutput";
 import History from "../../components/history";
 import CarouselAuthor from "../../components/carousel";
-import { SERVER_URL } from "../../common/constants";
-import { Divider } from "antd";
+import { SERVER_URL, TOPIC } from "../../common/constants";
 import ListImage from "../../components/listImage";
-import Dragger from "antd/lib/upload/Dragger";
+import Download from "../../components/download";
+import Detail from "../../components/details";
 
 function Home() {
   const [imageSrc, setImageSrc] = useState("");
@@ -38,6 +35,10 @@ function Home() {
   const [selectedFile, setSelectedFile] = useState("");
   const [loading, setLoading] = useState(false);
   const [upload, setUpload] = useState(false);
+  const [textLocation, setTextLocation] = useState("");
+  const [textTitle, setTextTitle] = useState("");
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
 
   const handleSubmit = async (event: any) => {
     setLoading(true);
@@ -54,6 +55,8 @@ function Home() {
         },
       });
       setImage64("data:image/png;base64," + response.data.image);
+      setTextLocation(response.data.textLocation);
+      setTextTitle(response.data.name);
     } catch (error) {
       console.log(error);
     }
@@ -86,12 +89,20 @@ function Home() {
     },
   };
 
+  useEffect(() => {
+    window.addEventListener("resize", function () {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    });
+  }, []);
+
   return (
     <LayoutContainer>
       <HeaderContainer>
         <HeaderTypography className="headerText">
-          VIETNAM NATIONAL UNIVERSITY, HO CHI MINH CITY UNIVERSITY OF
-          INFORMATION TECHNOLOGY
+          UNIVERSITY OF INFORMATION TECHNOLOGY
+          <br />
+          VIETNAM NATIONAL UNIVERSITY HO CHI MINH CITY
         </HeaderTypography>
         <ListImage />
       </HeaderContainer>
@@ -102,11 +113,9 @@ function Home() {
           {/* <ContentContainerTopDivider /> */}
           <ContentContainerTopText>
             <HeaderTypography className="headerTopic">
-              GRADUATION THESIS WEB DEMO AERIAL IMAGE OBJECT DETECTION
+              GRADUATION THESIS WEB DEMO
             </HeaderTypography>
-            <HeaderTypography className="headerDemo">
-              CAPTION OCR FOR DOCUMENT IMAGE
-            </HeaderTypography>
+            <HeaderTypography className="headerDemo">{TOPIC}</HeaderTypography>
           </ContentContainerTopText>
         </ContentContainerTop>
         <ContentContainerCenter className="containerCenter">
@@ -139,17 +148,20 @@ function Home() {
             onRemove={handleFileRemove}
             beforeUpload={() => false}
             maxCount={1}
+            showUploadList={false}
           >
             <ButtonUpload
               type="primary"
               icon={<UploadOutlined />}
-              size="large"
-              className="buttonUpload"
+              // size="large"
+              className="buttonBottom"
             >
-              Click to Upload
+              {!(width <= 900) ? "Upload" : null}
             </ButtonUpload>
           </UploadContainer>
-          <History />
+          <History width={width} />
+          <Download width={width} text={textLocation} title={textTitle} />
+          <Detail width={width} location={textLocation} title={textTitle} />
         </ContentContainerBottom>
       </ContentContainer>
       <FooterContainer>

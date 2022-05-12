@@ -1,25 +1,30 @@
 import React, { useState } from "react";
 import {
-  ButtonUpload,
-  ContentImage,
-  HistoryContainer,
-} from "../pages/home/homeStyle";
-import {
   ContentModalContainer,
   ContentModaText,
   ModalContainer,
+  DownloadContainer,
+  CollapseContainer,
+  ButtonUpload,
+  ContentImage,
+  HistoryContainer,
 } from "./historyStyle";
-import { HistoryOutlined, LoadingOutlined } from "@ant-design/icons";
+import {
+  HistoryOutlined,
+  LoadingOutlined,
+  DownloadOutlined,
+} from "@ant-design/icons";
 import axios from "axios";
 import { SERVER_URL } from "../common/constants";
-import { Divider, Spin } from "antd";
+import { Collapse, Divider, Spin } from "antd";
+import TableAnnotation from "./table";
 
-const History = () => {
+const History = ({ width }: { width: number }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [created, setCreated] = useState<string[]>([]);
   const [image, setImage] = useState<string[]>([]);
   const [name, setName] = useState<string[]>([]);
-  // const [total, setTotal] = useState<number>(0);
+  const [location, setLocation] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
   const getHistory = async () => {
@@ -32,16 +37,18 @@ const History = () => {
       let createdTemp: string[] = [];
       let imageTemp: string[] = [];
       let nameTemp: string[] = [];
+      let locationTemp: string[] = [];
       response.data.images.map((value: any) => {
         createdTemp = [...createdTemp, value.created];
         imageTemp = [...imageTemp, "data:image/png;base64," + value.image];
         nameTemp = [...nameTemp, value.name];
+        locationTemp = [...locationTemp, value.textLocation];
         return 0;
       });
       setCreated(createdTemp);
       setImage(imageTemp);
       setName(nameTemp);
-      // setTotal(response.data.total);
+      setLocation(locationTemp);
     } catch (error) {
       console.log(error);
     }
@@ -61,9 +68,95 @@ const History = () => {
     setIsModalVisible(false);
   };
 
-  let count = -1;
+  const downloadTxtFile = (text: string, title: string) => {
+    const element = document.createElement("a");
+    const file = new Blob([text.substring(0, text.length)], {
+      type: "text/plain",
+    });
+    element.href = URL.createObjectURL(file);
+    element.download = title + ".txt";
+    document.body.appendChild(element);
+    element.click();
+  };
+
+  const { Panel } = Collapse;
+
+  function callback(key: any) {
+    console.log(key);
+  }
 
   const antIcon = <LoadingOutlined style={{ fontSize: 64 }} spin />;
+
+  const ModalHistory = () => {
+    return (
+      <ModalContainer
+        title="History"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+        loading={loading}
+      >
+        {loading ? (
+          image.map((value, key) => {
+            return (
+              <ContentModalContainer key={"key" + key}>
+                <ContentImage
+                  src={value.toString()}
+                  width={"60%"}
+                  height={"35%"}
+                />
+                <ContentModaText>
+                  {"Image name: "}
+                  {/* {name[key].slice(1, name[key].split("-").length)} */}
+                  {name[key].substring(name[key].indexOf("-") + 1)}
+                </ContentModaText>
+
+                <ContentModaText>
+                  {"Created time: "}
+                  {created[key].split(" ")[0].toString() +
+                    " " +
+                    created[key].split(" ")[1].split(".")[0].toString()}
+                </ContentModaText>
+                {/* <TableAnnotation location={location[key]} title={name[key]} /> */}
+                <CollapseContainer
+                  bordered={false}
+                  defaultActiveKey={["0"]}
+                  onChange={callback}
+                  ghost
+                >
+                  <Panel header="Click to see details" key="1">
+                    <TableAnnotation
+                      location={location[key]}
+                      title={name[key]}
+                    />
+                  </Panel>
+                </CollapseContainer>
+
+                <DownloadContainer>
+                  <ButtonUpload
+                    type="primary"
+                    icon={<DownloadOutlined />}
+                    // size="large"
+                    onClick={() => {
+                      downloadTxtFile(location[key], name[key]);
+                    }}
+                    className="buttonBottom"
+                  >
+                    {!(width <= 900) ? "Download" : null}
+                  </ButtonUpload>
+                </DownloadContainer>
+
+                <Divider style={{ color: "black" }} />
+              </ContentModalContainer>
+            );
+          })
+        ) : (
+          <Spin indicator={antIcon} />
+        )}
+      </ModalContainer>
+    );
+  };
 
   return (
     <>
@@ -71,108 +164,14 @@ const History = () => {
         <ButtonUpload
           type="primary"
           icon={<HistoryOutlined />}
-          size="large"
+          // size="large"
           onClick={showModal}
-          className="buttonHistory"
+          className="buttonBottom"
         >
-          See history
+          {!(width <= 900) ? "History" : null}
         </ButtonUpload>
       </HistoryContainer>
-      {/* 
-      <ModalContainer
-        title="History"
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={null}
-        bodyStyle={{
-          height: "80vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          overflowY: "scroll",
-        }}
-      >
-        {!loading ? (
-          <Spin indicator={antIcon} />
-        ) : (
-          image.map((value) => {
-            count += 1;
-            return (
-              <ContentModalContainer key={"key" + count}>
-                <ContentImage src={value.toString()} />
-                <ContentModaText>{name[count]}</ContentModaText>
-                <ContentModaText>
-                  {created[count].split(" ")[1].split(".")[0].toString() +
-                    " " +
-                    created[count].split(" ")[0].toString()}
-                </ContentModaText>
-                <Divider style={{ color: "black" }} />
-              </ContentModalContainer>
-            );
-          })
-        )}
-      </ModalContainer> */}
-
-      {loading ? (
-        <ModalContainer
-          title="History"
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={null}
-          bodyStyle={{ height: "75vh", overflowY: "scroll" }}
-        >
-          {image.map((value) => {
-            count += 1;
-            return (
-              <ContentModalContainer key={"key" + count}>
-                <ContentImage
-                  src={value.toString()}
-                  width={"60%"}
-                  height={"35%"}
-                />
-                {/* For OCR */}
-                {/* <ContentCard className="contentCard" isResult={true}>
-                  <ContentCardText copyable={true}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum
-                  </ContentCardText>
-                </ContentCard> */}
-                <ContentModaText>{name[count]}</ContentModaText>
-                <ContentModaText>
-                  {created[count].split(" ")[1].split(".")[0].toString() +
-                    " " +
-                    created[count].split(" ")[0].toString()}
-                </ContentModaText>
-                <Divider style={{ color: "black" }} />
-              </ContentModalContainer>
-            );
-          })}
-        </ModalContainer>
-      ) : (
-        <ModalContainer
-          title="History"
-          visible={isModalVisible}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          footer={null}
-          bodyStyle={{
-            height: "75vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          <Spin indicator={antIcon} />
-        </ModalContainer>
-      )}
+      <ModalHistory />
     </>
   );
 };
