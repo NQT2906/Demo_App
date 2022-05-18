@@ -18,12 +18,16 @@ const InputOutput = ({
   output = "",
   position,
 }: IInputOutput) => {
+  console.log(imageInput);
   return (
     <ContentSideContainer>
       {/* For Predicted */}
       {imageInput ? (
         <ContentCard className="contentCard">
-          <ContentImage className="contentImage" src={imageInput} />
+          {/* <ContentImage className="contentImage" src={imageInput} /> */}
+          <video width="400" controls>
+            <source src={imageInput} />
+          </video>
         </ContentCard>
       ) : position === "Input" ? (
         <ContentCard className="contentCard">
