@@ -331,6 +331,7 @@ export const ContentImage = styled(Image)`
   // height: 30vh;
   // flex: 1;
   // resize-mode: cover;
+  object-fit: contain;
 `;
 
 export const ContentPosition = styled(Typography.Text)`
