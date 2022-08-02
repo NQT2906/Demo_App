@@ -28,6 +28,7 @@ import { SERVER_URL, TOPIC } from "../../common/constants";
 import ListImage from "../../components/listImage";
 import Download from "../../components/download";
 import Detail from "../../components/details";
+import { message } from "antd";
 
 function Home() {
   const [imageSrc, setImageSrc] = useState("");
@@ -39,6 +40,17 @@ function Home() {
   const [textTitle, setTextTitle] = useState("");
   const [width, setWidth] = useState(window.innerWidth);
   const [height, setHeight] = useState(window.innerHeight);
+
+  // List were created by information in https://developer.mozilla.org/en-US/docs/Web/Media/Formats/Image_types
+  // Types below maybe contain animated and img-crop-ant can't handle it (it will transform file to png)
+  // img-crop-ant can handle file type BMP, ICO, RAW
+  const listTypeAnimatedImage = [
+    "image/webp",
+    "image/gif",
+    "image/svg+xml",
+    "image/avif",
+    "image/apng",
+  ];
 
   const handleSubmit = async (event: any) => {
     setLoading(true);
@@ -57,6 +69,7 @@ function Home() {
       setImage64("data:image/png;base64," + response.data.image);
       setTextLocation(response.data.textLocation);
       setTextTitle(response.data.name);
+      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -64,8 +77,14 @@ function Home() {
   };
 
   const handleFileUpload = (info: any) => {
-    setImageSrc(URL.createObjectURL(info.file));
-    setSelectedFile(info.file);
+    if (
+      listTypeAnimatedImage.includes(info.file.type) ||
+      info.file.size / 1024 / 1024 > 2
+    ) {
+    } else {
+      setImageSrc(URL.createObjectURL(info.file.originFileObj));
+      setSelectedFile(info.file.originFileObj);
+    }
     setUpload(true);
   };
 
@@ -146,7 +165,21 @@ function Home() {
             name={"file"}
             onChange={handleFileUpload}
             onRemove={handleFileRemove}
-            beforeUpload={() => false}
+            beforeUpload={(file) => {
+              const isJpgOrPng =
+                file.type === "image/jpeg" || file.type === "image/png";
+              const isLt2M = file.size / 1024 / 1024 < 2;
+
+              if (!isJpgOrPng) {
+                message.error("You can only upload JPG/PNG file!");
+              } else {
+                if (!isLt2M) {
+                  message.error("Image must smaller than 2MB!");
+                }
+              }
+
+              return isJpgOrPng && isLt2M;
+            }}
             maxCount={1}
             showUploadList={false}
           >
